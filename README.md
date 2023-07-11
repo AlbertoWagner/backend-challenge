@@ -70,19 +70,19 @@ Siga as instruções abaixo para instalar e executar o projeto:
   ```
       docker-compose up --build
   ```
-
 5. Aguarde até que todos os serviços estejam em execução. Você verá logs indicando o progresso.
 
 6. Acesse a aplicação em seu navegador em http://localhost:8000/.
 
-7.Para executar os testes, você pode usar o seguinte comando:
+7. Para executar os testes, você pode usar o seguinte comando:
 
  ```
      docker exec -it backend-challenge-web-1 python manage.py test
   ```
 
 
-REST API
+# REST API
+
 A aplicação possui uma REST API para acessar e gerenciar os produtos. Abaixo estão os principais endpoints da API:
 
 GET /: Retorna uma mensagem de boas-vindas indicando que a API está funcionando corretamente.
