@@ -118,25 +118,6 @@ O objetivo do cron job é buscar os dados dos produtos da fonte externa, process
 
 Este projeto foi desenvolvido como parte do desafio proposto pela Coodesh.
 
-
-## Agradecimentos
-
-Agradecemos à Coodesh por propor esse desafio interessante.
-
-## Contato
-
-Se tiver alguma dúvida ou sugestão, entre em contato:
-
-- [E-mail](mailto:seu-email@example.com)
-- [LinkedIn](https://www.linkedin.com/in/seu-perfil-linkedin)
-
----
-
-Este projeto foi desenvolvido como parte do desafio proposto pela Coodesh.
-
-Para mais informações sobre o desafio, visite [Coodesh](https://coodesh.com/).
-
-
 <a href="#">
  <sub><b>Alberto Wagner</b></sub></a> <a href="#" ></a>
 
