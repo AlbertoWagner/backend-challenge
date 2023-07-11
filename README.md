@@ -81,15 +81,58 @@ Siga as instruções abaixo para instalar e executar o projeto:
   ```
 
 
-# REST API
+## REST API
 
 A aplicação possui uma REST API para acessar e gerenciar os produtos. Abaixo estão os principais endpoints da API:
 
-GET /: Retorna uma mensagem de boas-vindas indicando que a API está funcionando corretamente.
-GET /products/: Lista todos os produtos disponíveis.
-GET /products/{code}/: Obtém informações de um produto específico com base no código.
+- `GET /`: Retorna uma mensagem de boas-vindas indicando que a API está funcionando corretamente.
+- `GET /products/`: Lista todos os produtos disponíveis.
+- `GET /products/{code}/`: Obtém informações de um produto específico com base no código.
+
+Exemplo de resposta para o endpoint `GET /products/{code}/`:
+
+```json
+{
+  "code": "3251490332080",
+  "barcode": "0462245783733",
+  "status": "imported",
+  "imported_t": "2023-07-09T00:53:57Z",
+  "url": "https://www.example.com/product/3251490332080",
+  "product_name": "Product Name",
+  "quantity": "100",
+  "categories": ["category1", "category2"],
+  "packaging": ["packaging1", "packaging2"],
+  "brands": "Brand",
+  "image_url": "https://www.example.com/images/product/3251490332080.jpg"
+}
+```
+
+
+## Cron Job
+
+Foi configurado um cron job para executar a sincronização dos produtos em um horário específico todos os dias. O cron job está agendado para rodar às 23:30h.
+
+O objetivo do cron job é buscar os dados dos produtos da fonte externa, processá-los e armazená-los no banco de dados. Dessa forma, a base de dados estará sempre atualizada com as informações mais recentes.
 
 Este projeto foi desenvolvido como parte do desafio proposto pela Coodesh.
+
+
+## Agradecimentos
+
+Agradecemos à Coodesh por propor esse desafio interessante.
+
+## Contato
+
+Se tiver alguma dúvida ou sugestão, entre em contato:
+
+- [E-mail](mailto:seu-email@example.com)
+- [LinkedIn](https://www.linkedin.com/in/seu-perfil-linkedin)
+
+---
+
+Este projeto foi desenvolvido como parte do desafio proposto pela Coodesh.
+
+Para mais informações sobre o desafio, visite [Coodesh](https://coodesh.com/).
 
 
 <a href="#">
