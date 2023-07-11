@@ -72,7 +72,7 @@ Siga as instruções abaixo para instalar e executar o projeto:
   ```
 5. Aguarde até que todos os serviços estejam em execução. Você verá logs indicando o progresso.
 
-6. Acesse a aplicação em seu navegador em http://localhost:8000/.
+6. Acesse a aplicação em seu navegador em http://localhost:8080/.
 
 7. Para executar os testes, você pode usar o seguinte comando:
 
