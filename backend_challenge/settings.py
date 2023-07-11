@@ -10,31 +10,31 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
+import pytz
 
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+from celery.schedules import crontab
 
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-o$pcu!s$tbml==0fjfeo%$(92^!13hv#p7qckma)p03_t^*j&z'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-o$pcu!s$tbml==0fjfeo%$(92^!13hv#p7qckma)p03_t^*j&z')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
-DEBUG = True
-SITE_ID = 1
+DEBUG = os.environ.get('DEBUG', True)
+SITE_ID = os.environ.get('SITE_ID', 1)
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
 
-ALLOWED_HOSTS = [
-    '*',
-]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Application definition
@@ -47,10 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_celery_beat',
-    'django_celery_results',
     'rest_framework',
     'rest_framework.authtoken',
-    # 'rest_auth',
     'products',
 
 ]
@@ -93,18 +91,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend_challenge.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mydatabase',
-        'USER': 'myuser',
-        'PASSWORD': 'mypassword',
-        'HOST': 'db',
-        'PORT': '5432',
+        'NAME': os.environ.get('DB_NAME', 'mydatabase'),
+        'USER': os.environ.get('DB_USER', 'myuser'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'mypassword'),
+        'HOST': os.environ.get('DB_HOST', 'db'),
+        'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
 
@@ -131,17 +128,11 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
+# Configuração do idioma
+LANGUAGE_CODE = 'pt-br'  # Define o idioma como português brasileiro
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
-USE_I18N = True
-
-USE_TZ = True
-
+# Configuração do fuso horário
+TIME_ZONE = 'America/Sao_Paulo'  # Define o fuso horário como horário de São Paulo, Brasil
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -150,11 +141,14 @@ STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+from pytz import timezone
+
+TIME_ZONE_OBJ = timezone(TIME_ZONE)
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Celery settings
-CELERY_BROKER_URL = 'redis://redis:6379/0'
-CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://redis:6379/0')
+CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND', 'redis://redis:6379/0')
 
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
@@ -163,3 +157,38 @@ CELERY_DEBUG = True
 CELERYBEAT_DEBUG = True
 CELERY_TASK_ALWAYS_EAGER = True
 CELERY_TASK_RESULT_EXPIRES = 3600
+CELERY_TIMEZONE = TIME_ZONE_OBJ
+
+CELERY_BEAT_SCHEDULE = {
+    'task1': {
+        'task': 'products.tasks.build_creat_and_update_products',
+        'schedule': crontab(minute=35, hour=22),  # Às 23:30
+
+        # 'schedule': crontab(minute=0, hour='8,12,16'),  # Às 8h, 12h e 16h
+    },
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            'format': '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',  # Definindo o nível de log como DEBUG
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'challenge.log',
+            'formatter': 'standard',  # Usando o formato 'standard' definido acima
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['file'],
+            'level': 'DEBUG',  # Definindo o nível de log como DEBUG
+            'propagate': True,
+        },
+    },
+}
