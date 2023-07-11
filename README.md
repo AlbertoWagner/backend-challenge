@@ -67,9 +67,11 @@ Siga as instruções abaixo para instalar e executar o projeto:
    ```
    
 4.Crie e inicie os contêineres Docker:
+
   ```
       docker-compose up --build
   ```
+
 5. Aguarde até que todos os serviços estejam em execução. Você verá logs indicando o progresso.
 
 6. Acesse a aplicação em seu navegador em http://localhost:8080/.
