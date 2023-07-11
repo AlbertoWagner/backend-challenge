@@ -7,7 +7,7 @@ class Product(models.Model):
         ('imported', 'Imported'),
     ]
 
-    code = models.BigIntegerField()  # Alteração para BigIntegerField
+    code = models.BigIntegerField(unique=True)
     barcode = models.CharField(max_length=550)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES)
     imported_t = models.DateTimeField()
@@ -20,7 +20,7 @@ class Product(models.Model):
     image_url = models.URLField()
 
     def __str__(self):
-        return self.code
+        return self.barcode
 
     class Meta:
         ordering = ['-imported_t']
