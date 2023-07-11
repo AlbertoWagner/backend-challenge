@@ -1,9 +1,9 @@
-version: '3.7'
-
 services:
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8080
+    command: sh -c "python manage.py makemigrations &&
+                    python manage.py migrate &&
+                    python manage.py runserver 0.0.0.0:8080"
     volumes:
       - .:/code
     ports:
@@ -13,6 +13,18 @@ services:
       - redis
     stdin_open: true
     tty: true
+    env_file:
+      - backend_challenge/.env
+
+  init_superuser:
+    build: .
+    command: python init_superuser.py
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+    env_file:
+      - backend_challenge/.env
 
   db:
     image: postgres
@@ -20,11 +32,9 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     ports:
       - "5432:5432"
-    environment:
-      - POSTGRES_USER=myuser
-      - POSTGRES_PASSWORD=mypassword
-      - POSTGRES_DB=mydatabase
     restart: always
+    env_file:
+      - backend_challenge/.env
 
   redis:
     image: redis
@@ -34,28 +44,24 @@ services:
     command: celery -A backend_challenge worker --loglevel=debug
     volumes:
       - .:/code
-    environment:
-      - DJANGO_SETTINGS_MODULE=backend_challenge.settings
-      - CELERY_BROKER_URL=redis://redis:6379/0
-      - CELERY_RESULT_BACKEND=redis://redis:6379/0
     depends_on:
       - web
       - redis
     restart: always
+    env_file:
+      - backend_challenge/.env
 
   celery-beat:
     build: .
     command: celery -A backend_challenge beat --scheduler django_celery_beat.schedulers:DatabaseScheduler --loglevel=debug
     volumes:
       - .:/code
-    environment:
-      - DJANGO_SETTINGS_MODULE=backend_challenge.settings
-      - CELERY_BROKER_URL=redis://redis:6379/0
-      - CELERY_RESULT_BACKEND=redis://redis:6379/0
     depends_on:
       - web
       - redis
     restart: always
+    env_file:
+      - backend_challenge/.env
 
 volumes:
   postgres_data:
