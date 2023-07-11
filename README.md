@@ -1,5 +1,3 @@
-README.md
-
 # Product Sync Challenge
 
 Este é um desafio proposto pela Coodesh para sincronização de produtos.
