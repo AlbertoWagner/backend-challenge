@@ -5,12 +5,11 @@ Linguagem, Framework e Tecnologias utilizadas
 Linguagem: Python
 Framework: Django
 
-dexec -it backend-challenge-web-1   python manage.py createsuperuser
-
-
-   docker exec -it backend-challenge-web-1   python manage.py makemigrations
-   docker exec -it backend-challenge-web-1   python manage.py migrate
-
+dexec -it backend-challenge-web-1 python manage.py createsuperuser
+docker exec -it backend-challenge-web-1 python manage.py makemigrations
+docker exec -it backend-challenge-web-1 python manage.py migrate
+docker-compose --env-file backend-challenge/backend_challenge/.env up
+docker exec -it backend-challenge-web-1 python manage.py test
 #Autor
 Alberto Wagner
 Feito por Alberto 👋🏽 Entre em contato!
