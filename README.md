@@ -66,7 +66,7 @@ Siga as instruções abaixo para instalar e executar o projeto:
       DJANGO_SUPERUSER_PASSWORD=admin
    ```
    
-4.Crie e inicie os contêineres Docker:
+4. Crie e inicie os contêineres Docker:
 
   ```
       docker-compose up --build
