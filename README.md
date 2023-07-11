@@ -38,38 +38,37 @@ Siga as instruções abaixo para instalar e executar o projeto:
 3. Configure as variáveis de ambiente no arquivo `.env`:
 
    ```
-SECRET_KEY=django-insecure-o$pcu!s$tbml==0fjfeo%$(92^!13hv#p7qckma)p03_t^*j&z
-DEBUG=True
-SITE_ID=1
-ALLOWED_HOSTS=*
-
-DB_NAME=mydatabase
-DB_USER=myuser
-DB_PASSWORD=mypassword
-DB_HOST=db
-DB_PORT=5432
-
-DJANGO_SETTINGS_MODULE=backend_challenge.settings
-CELERY_BROKER_URL=redis://redis:6379/0
-CELERY_RESULT_BACKEND=redis://redis:6379/0
-
-CELERY_BROKER_URL=redis://redis:6379/0
-CELERY_RESULT_BACKEND=redis://redis:6379/0
-POSTGRES_HOST_AUTH_METHOD=trust
-
-POSTGRES_USER=myuser
-POSTGRES_PASSWORD=mypassword
-POSTGRES_DB=mydatabase
-
-DJANGO_SUPERUSER_USERNAME=admin
-DJANGO_SUPERUSER_EMAIL=admin@example.com
-DJANGO_SUPERUSER_PASSWORD=admin
+      SECRET_KEY=django-insecure-o$pcu!s$tbml==0fjfeo%$(92^!13hv#p7qckma)p03_t^*j&z
+      DEBUG=True
+      SITE_ID=1
+      ALLOWED_HOSTS=*
+      
+      DB_NAME=mydatabase
+      DB_USER=myuser
+      DB_PASSWORD=mypassword
+      DB_HOST=db
+      DB_PORT=5432
+      
+      DJANGO_SETTINGS_MODULE=backend_challenge.settings
+      CELERY_BROKER_URL=redis://redis:6379/0
+      CELERY_RESULT_BACKEND=redis://redis:6379/0
+      
+      CELERY_BROKER_URL=redis://redis:6379/0
+      CELERY_RESULT_BACKEND=redis://redis:6379/0
+      POSTGRES_HOST_AUTH_METHOD=trust
+      
+      POSTGRES_USER=myuser
+      POSTGRES_PASSWORD=mypassword
+      POSTGRES_DB=mydatabase
+      
+      DJANGO_SUPERUSER_USERNAME=admin
+      DJANGO_SUPERUSER_EMAIL=admin@example.com
+      DJANGO_SUPERUSER_PASSWORD=admin
    ```
    
 4.Crie e inicie os contêineres Docker:
-  ```shell
-docker-compose up --build
-
+  ```
+      docker-compose up --build
   ```
 
 5. Aguarde até que todos os serviços estejam em execução. Você verá logs indicando o progresso.
@@ -78,7 +77,7 @@ docker-compose up --build
 
 7.Para executar os testes, você pode usar o seguinte comando:
 
- ```shell
+ ```
      docker exec -it backend-challenge-web-1 python manage.py test
   ```
 
